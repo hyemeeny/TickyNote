@@ -1,14 +1,15 @@
-import { Todo } from '@/types/todo';
+'use client';
 
-interface TodoListProps {
-  todos: Todo[];
-}
+import TodoItem from '@/components/TodoItem';
+import { useTodoStore } from '@/stores/useTodoStore';
 
-const TodoList = ({ todos }: TodoListProps) => {
+const TodoList = () => {
+  const { todos } = useTodoStore();
+
   return (
     <ul>
       {todos.map((todo) => (
-        <li key={todo.id}>{todo.text}</li>
+        <TodoItem todo={todo} key={todo.id} />
       ))}
     </ul>
   );
