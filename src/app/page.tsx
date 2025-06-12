@@ -1,3 +1,11 @@
+import TodoInput from '@/components/TodoInput';
+import TodoList from '@/components/TodoList';
+
 export default function Home() {
-  return <div></div>;
+  return (
+    <main>
+      <TodoInput />
+      <TodoList />
+    </main>
+  );
 }
