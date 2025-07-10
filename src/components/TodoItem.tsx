@@ -4,7 +4,7 @@ import { useTodoStore } from '@/stores/useTodoStore';
 import clsx from 'clsx';
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
-  const { id, text } = todo;
+  const { id, title, description } = todo;
   const { removeTodo } = useTodoStore();
   const [isBlinking, setIsBlinking] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -44,8 +44,9 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
         className={clsx('transition-all cursor-pointer', isBlinking ? 'animate-blink' : '')}
       />
       <label htmlFor={`todo-${id}`} className="text-sm cursor-pointer">
-        {text}
+        {title}
       </label>
+      <p>{description}</p>
     </li>
   );
 };

@@ -1,10 +1,11 @@
 'use client';
 
 import TodoItem from '@/components/TodoItem';
-import { useTodoStore } from '@/stores/useTodoStore';
+// import { useTodoStore } from '@/stores/useTodoStore';
+import { Todo } from '@/types/todo';
 
-const TodoList = () => {
-  const { todos } = useTodoStore();
+const TodoList = ({ todos }: { todos: Todo[] }) => {
+  // const { todos } = useTodoStore();
 
   return (
     <ul>
