@@ -1,38 +1,22 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Todo } from '@/types/todo';
-import { useTodoStore } from '@/stores/useTodoStore';
-import clsx from 'clsx';
+import { updateTodo } from '@/lib/api/todo';
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
-  const { id, title, description } = todo;
-  const { removeTodo } = useTodoStore();
-  const [isBlinking, setIsBlinking] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { id, title, description, is_done } = todo;
+  const [checked, setChecked] = useState(is_done);
 
-  const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked;
+  const handleChecked = async () => {
+    const newChecked = !checked;
+    setChecked(newChecked);
 
-    if (checked) {
-      setIsBlinking(true);
-      timeoutRef.current = setTimeout(() => {
-        removeTodo(id);
-      }, 3000);
-    } else {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-      setIsBlinking(false);
+    try {
+      await updateTodo({ id: id, is_done: newChecked });
+    } catch (error) {
+      console.error('업데이트 실패', error);
+      setChecked(!newChecked); // 실패시 롤백
     }
   };
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
 
   return (
     <li className="flex gap-2">
@@ -40,13 +24,15 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
         id={`todo-${id}`}
         type="checkbox"
         name="check"
-        onChange={handleCheck}
-        className={clsx('transition-all cursor-pointer', isBlinking ? 'animate-blink' : '')}
+        className="cursor-pointer"
+        onClick={handleChecked}
       />
       <label htmlFor={`todo-${id}`} className="text-sm cursor-pointer">
         {title}
       </label>
       <p>{description}</p>
+      <button>수정</button>
+      <button>삭제</button>
     </li>
   );
 };
