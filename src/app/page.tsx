@@ -1,15 +1,12 @@
-import { supabase } from '@/api/supabase';
 import TodoInput from '@/components/TodoInput';
 import TodoList from '@/components/TodoList';
-// import { createClient } from '@/utils/supabase/server';
+import { supabase } from '@/lib/supabase/client';
 
 export const getTodos = async () => {
-  // const supabase = await createClient(); // 비동기 함수
-  // const { data, error } = await supabase.from('todos').select('*');
-  const { data, error } = await supabase.from('todos').select('*');
+  const { data: todos, error } = await supabase.from('todos').select('*');
   if (error) throw error;
 
-  return data;
+  return todos;
 };
 
 export default async function Home() {
@@ -19,7 +16,7 @@ export default async function Home() {
   return (
     <main>
       <TodoInput />
-      <TodoList todos={todos} />
+      <TodoList initialTodos={todos || []} />
     </main>
   );
 }
