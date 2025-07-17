@@ -3,16 +3,19 @@
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-// import { useTodoStore } from '@/stores/useTodoStore';
-import { Todo } from '@/types/todo';
-import { createTodo } from '@/actions/todo';
+import { createTodo } from '@/lib/api/todo';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 const schema = z.object({
   title: z.string().min(1, { message: '할 일을 입력해주세요!' }),
-  description: z.string().optional(),
+  description: z.string().nullable(),
 });
 
+type FormData = z.infer<typeof schema>;
+
 const TodoInput = () => {
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
@@ -22,20 +25,18 @@ const TodoInput = () => {
     resolver: zodResolver(schema),
   });
 
-  type FormData = z.infer<typeof schema>;
+  const createTodoMutation = useMutation({
+    mutationFn: async (data: FormData) => {
+      await createTodo(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+    },
+  });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    const newTodo: Todo = {
-      id: Date.now().toString(),
-      title: data.title,
-      description: data.description ?? null,
-      due_date: new Date().toISOString(),
-      is_done: false,
-      created_at: new Date().toISOString(),
-    };
-
-    console.log('새로운 할 일:', newTodo);
-    createTodo(newTodo);
+    console.log('새로운 할 일:', data);
+    createTodoMutation.mutate(data);
     reset();
   };
 
