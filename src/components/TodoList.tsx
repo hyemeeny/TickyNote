@@ -1,15 +1,15 @@
 'use client';
 
-import TodoItem from '@/components/TodoItem';
-// import { useTodoStore } from '@/stores/useTodoStore';
 import { Todo } from '@/types/todo';
+import { useTodos } from '@/hooks/useTodos';
+import TodoItem from '@/components/TodoItem';
 
-const TodoList = ({ todos }: { todos: Todo[] }) => {
-  // const { todos } = useTodoStore();
+const TodoList = ({ initialData }: { initialData: Todo[] }) => {
+  const { todos } = useTodos({ initialData });
 
   return (
     <ul>
-      {todos.map((todo) => (
+      {todos.map((todo: Todo) => (
         <TodoItem todo={todo} key={todo.id} />
       ))}
     </ul>

@@ -1,38 +1,23 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Todo } from '@/types/todo';
-import { useTodoStore } from '@/stores/useTodoStore';
+import { checkedTodo } from '@/lib/api/todo';
 import clsx from 'clsx';
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
-  const { id, title, description } = todo;
-  const { removeTodo } = useTodoStore();
-  const [isBlinking, setIsBlinking] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { id, title, description, is_done } = todo;
+  const [checked, setChecked] = useState(is_done);
 
-  const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked;
+  const handleChecked = async () => {
+    const newChecked = !checked;
+    setChecked(newChecked);
 
-    if (checked) {
-      setIsBlinking(true);
-      timeoutRef.current = setTimeout(() => {
-        removeTodo(id);
-      }, 3000);
-    } else {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-      setIsBlinking(false);
+    try {
+      await checkedTodo({ id: id, is_done: newChecked });
+    } catch (error) {
+      console.error('업데이트 실패', error);
+      setChecked(!newChecked); // 실패시 롤백
     }
   };
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
 
   return (
     <li className="flex gap-2">
@@ -40,13 +25,19 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
         id={`todo-${id}`}
         type="checkbox"
         name="check"
-        onChange={handleCheck}
-        className={clsx('transition-all cursor-pointer', isBlinking ? 'animate-blink' : '')}
+        className="cursor-pointer"
+        onChange={handleChecked}
+        checked={checked}
       />
-      <label htmlFor={`todo-${id}`} className="text-sm cursor-pointer">
+      <label
+        htmlFor={`todo-${id}`}
+        className={clsx('text-sm cursor-pointer', { 'line-through': checked })}
+      >
         {title}
       </label>
       <p>{description}</p>
+      <button>수정</button>
+      <button>삭제</button>
     </li>
   );
 };
