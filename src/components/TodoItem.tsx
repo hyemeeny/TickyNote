@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Todo } from '@/types/todo';
-import { updateTodo } from '@/lib/api/todo';
+import { checkedTodo } from '@/lib/api/todo';
+import clsx from 'clsx';
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
   const { id, title, description, is_done } = todo;
@@ -11,7 +12,7 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
     setChecked(newChecked);
 
     try {
-      await updateTodo({ id: id, is_done: newChecked });
+      await checkedTodo({ id: id, is_done: newChecked });
     } catch (error) {
       console.error('업데이트 실패', error);
       setChecked(!newChecked); // 실패시 롤백
@@ -25,9 +26,13 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
         type="checkbox"
         name="check"
         className="cursor-pointer"
-        onClick={handleChecked}
+        onChange={handleChecked}
+        checked={checked}
       />
-      <label htmlFor={`todo-${id}`} className="text-sm cursor-pointer">
+      <label
+        htmlFor={`todo-${id}`}
+        className={clsx('text-sm cursor-pointer', { 'line-through': checked })}
+      >
         {title}
       </label>
       <p>{description}</p>

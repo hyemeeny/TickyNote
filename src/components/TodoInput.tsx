@@ -35,7 +35,6 @@ const TodoInput = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log('새로운 할 일:', data);
     createTodoMutation.mutate(data);
     reset();
   };

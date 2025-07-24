@@ -7,10 +7,10 @@ export const PATCH = async (
 ) => {
   const { id } = await params;
   try {
-    const body = await req.json();
+    const { is_done } = await req.json();
     const { data, error } = await supabase
       .from('todos')
-      .update(body)
+      .update({ is_done })
       .eq('id', id)
       .select();
     if (error) throw error;

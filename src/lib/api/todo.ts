@@ -29,15 +29,15 @@ export const createTodo = async (formData: {
   return res.json();
 };
 
-export const updateTodo = async (data: Partial<Todo>) => {
+export const checkedTodo = async (data: Partial<Todo>) => {
   const res = await fetch(`/api/todos/${data.id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data }),
+    body: JSON.stringify({ is_done: data.is_done }),
   });
 
   console.log('data 디버깅', data);
 
-  if (!res.ok) throw new Error('업데이트 실패');
+  if (!res.ok) throw new Error('투두 체크 실패');
   return res.json();
 };
