@@ -1,16 +1,11 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { Todo } from '@/types/todo';
+import { useTodos } from '@/hooks/useTodos';
 import TodoItem from '@/components/TodoItem';
-import { fetchTodos } from '@/lib/api/todo';
 
-const TodoList = ({ initialTodos }: { initialTodos: Todo[] }) => {
-  const { data: todos = [] } = useQuery({
-    queryKey: ['todos'],
-    queryFn: fetchTodos,
-    initialData: initialTodos,
-  });
+const TodoList = ({ initialData }: { initialData: Todo[] }) => {
+  const { todos } = useTodos({ initialData });
 
   return (
     <ul>
