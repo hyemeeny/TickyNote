@@ -4,13 +4,15 @@ import { Todo } from '@/types/todo';
 import { useTodos } from '@/hooks/useTodos';
 import TodoItem from '@/components/TodoItem';
 
-const TodoList = ({ initialData }: { initialData: Todo[] }) => {
-  const { todos } = useTodos({ initialData });
+const TodoList = () => {
+  const { data: todos, isLoading } = useTodos();
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <ul>
       {todos.map((todo: Todo) => (
-        <TodoItem todo={todo} key={todo.id} />
+        <TodoItem key={todo.id} todo={todo} />
       ))}
     </ul>
   );

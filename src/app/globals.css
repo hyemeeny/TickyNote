@@ -25,6 +25,11 @@ body {
   font-family: var(--font-pretendard), Arial, Helvetica, sans-serif;
 }
 
+button,
+a {
+  cursor: pointer;
+}
+
 @keyframes blink {
   0%,
   100% {

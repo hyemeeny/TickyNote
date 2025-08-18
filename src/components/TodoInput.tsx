@@ -3,8 +3,7 @@
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createTodo } from '@/lib/api/todo';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useCreateTodo } from '@/hooks/useTodos';
 
 const schema = z.object({
   title: z.string().min(1, { message: '할 일을 입력해주세요!' }),
@@ -14,7 +13,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const TodoInput = () => {
-  const queryClient = useQueryClient();
+  const createTodo = useCreateTodo();
 
   const {
     register,
@@ -25,17 +24,8 @@ const TodoInput = () => {
     resolver: zodResolver(schema),
   });
 
-  const createTodoMutation = useMutation({
-    mutationFn: async (data: FormData) => {
-      await createTodo(data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] });
-    },
-  });
-
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    createTodoMutation.mutate(data);
+    createTodo.mutate(data);
     reset();
   };
 
@@ -55,9 +45,7 @@ const TodoInput = () => {
           id="description"
           {...register('description')}
         />
-        <button type="submit" className="cursor-pointer">
-          추가
-        </button>
+        <button type="submit">추가</button>
       </div>
       {errors.title && (
         <p className="text-red-500 text-sm">{errors.title.message}</p>
