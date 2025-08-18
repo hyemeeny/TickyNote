@@ -5,13 +5,10 @@
 
 import { Todo } from '@/types/todo';
 
-export const fetchTodos = async () => {
+export const getTodos = async () => {
   const res = await fetch('/api/todos');
 
-  if (!res.ok) {
-    const errorBody = await res.json().catch(() => ({}));
-    throw new Error(errorBody.message || '서버 요청 실패');
-  }
+  if (!res.ok) throw new Error('투두 조회 실패');
   return res.json();
 };
 
@@ -29,15 +26,26 @@ export const createTodo = async (formData: {
   return res.json();
 };
 
-export const checkedTodo = async (data: Partial<Todo>) => {
+export const updateTodo = async (
+  // id는 필수 속성 타입이고 나머지만 부분 업데이트 가능
+  // Omit: 특정 속성을 타입에서 제거
+  data: { id: string } & Partial<Omit<Todo, 'id'>>
+) => {
   const res = await fetch(`/api/todos/${data.id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ is_done: data.is_done }),
+    body: JSON.stringify(data),
   });
 
-  console.log('data 디버깅', data);
+  if (!res.ok) throw new Error('투두 수정 실패');
+  return res.json();
+};
 
-  if (!res.ok) throw new Error('투두 체크 실패');
+export const deleteTodo = async (id: string) => {
+  const res = await fetch(`/api/todos/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!res.ok) throw new Error('투두 삭제 실패');
   return res.json();
 };
