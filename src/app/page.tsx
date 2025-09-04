@@ -3,9 +3,9 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import TodoInput from '@/components/TodoInput';
 import TodoList from '@/components/TodoList';
 import { supabase } from '@/lib/supabase/client';
+import TodoForm from '@/components/TodoForm';
 
 const getTodos = async () => {
   const { data, error } = await supabase.from('todos').select('*');
@@ -25,7 +25,7 @@ export default async function Home() {
     // dehydrate: Tanstack Query의 queryClient 상태를 JSON으로 직렬화해 클라이언트로 전달
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main>
-        <TodoInput />
+        <TodoForm />
         <TodoList />
       </main>
     </HydrationBoundary>
