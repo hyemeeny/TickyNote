@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase/client';
 
+/* Next.js 15.1부터 params가 비동기(Promise)로 래핑됨 */
+type ParamsProps = Promise<{ id: string }>;
+
 export const PATCH = async (
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: ParamsProps }
 ) => {
   const { id } = await params;
   try {
@@ -24,7 +27,10 @@ export const PATCH = async (
   }
 };
 
-export const DELETE = async ({ params }: { params: { id: string } }) => {
+export const DELETE = async (
+  req: NextRequest,
+  { params }: { params: ParamsProps }
+) => {
   const { id } = await params;
   try {
     const { data, error } = await supabase
