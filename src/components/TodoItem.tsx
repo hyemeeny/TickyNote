@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Todo } from '@/types/todo';
-import clsx from 'clsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDeleteTodo, useUpdateTodo } from '@/hooks/useTodos';
+import { Todo } from '@/types/todo';
+import clsx from 'clsx';
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
   const { id, title, description, is_done } = todo;
@@ -15,7 +15,7 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
     defaultValues: { title, description: description ?? '' },
   });
 
-  // 체크박스 즉시 반영 + 실패 시 롤백
+  // 체크박스 이벤트
   const handleChecked = () => {
     const newChecked = !checked;
     setChecked(newChecked);
@@ -26,25 +26,24 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
     );
   };
 
-  // 수정 버튼 → 폼 열기 + 현재 값 초기화
+  // 수정 이벤트
   const handleEdit = () => {
     reset({ title, description: description ?? '' });
     setIsEditing(true);
   };
 
-  // 취소 → 폼 닫기 + 초기값 복원
+  // 취소 이벤트
   const handleCancel = () => {
     reset({ title, description: description ?? '' });
     setIsEditing(false);
   };
 
-  // 삭제 → 폼 닫기
+  // 삭제 이벤트
   const handleDelete = () => {
     deleteTodo.mutate(id);
     setIsEditing(false);
   };
 
-  // 저장 → 서버 반영 + 캐시 갱신 + 폼 닫기
   const onSubmit: SubmitHandler<Todo> = (data) => {
     updateTodo.mutate(
       { ...data, id },
