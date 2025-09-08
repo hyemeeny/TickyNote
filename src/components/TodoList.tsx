@@ -8,10 +8,16 @@ const TodoList = () => {
   const { data: todos, isLoading } = useTodos();
 
   if (isLoading) return <p>Loading...</p>;
+  if (!todos) return null;
+
+  const sortedTodos = [...todos].sort(
+    (a, b) =>
+      new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+  );
 
   return (
     <ul>
-      {todos.map((todo: Todo) => (
+      {sortedTodos.map((todo: Todo) => (
         <TodoItem key={todo.id} todo={todo} />
       ))}
     </ul>
