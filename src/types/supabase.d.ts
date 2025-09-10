@@ -39,7 +39,7 @@ export type Database = {
   };
   public: {
     Tables: {
-      todos: {
+      tickies: {
         Row: {
           created_at: string;
           description: string | null;

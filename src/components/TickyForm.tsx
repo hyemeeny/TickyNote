@@ -3,47 +3,47 @@
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCreateTodo } from '@/hooks/useTodos';
-import TodoInput from './TodoInput';
+import { useCreateTicky } from '@/hooks/useTicky';
+import TickyInput from '@/components/TickyInput';
 
 const schema = z.object({
   title: z.string().min(1, { message: '할 일을 입력해주세요!' }),
-  description: z.string().nullable(),
+  description: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const TodoForm = () => {
-  const createTodo = useCreateTodo();
+const TickyForm = () => {
+  const createTicky = useCreateTicky();
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    createTodo.mutate(data);
+    createTicky.mutate(data);
     reset();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>TODOLIST</h1>
-      <TodoInput
+      <h1>TickyNote</h1>
+      <TickyInput
         label="제목"
-        name="title"
+        id="title"
         type="text"
         placeholder="할 일을 입력하세요"
         register={register('title')}
         errors={errors.title}
       />
-      <TodoInput
+      <TickyInput
         label="설명"
-        name="description"
+        id="description"
         type="text"
         placeholder="설명을 입력하세요"
         register={register('description')}
@@ -54,4 +54,4 @@ const TodoForm = () => {
   );
 };
 
-export default TodoForm;
+export default TickyForm;

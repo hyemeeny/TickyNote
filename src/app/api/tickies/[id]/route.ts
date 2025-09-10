@@ -12,7 +12,7 @@ export const PATCH = async (
   try {
     const { title, description, due_date, is_done } = await req.json();
     const { data, error } = await supabase
-      .from('todos')
+      .from('tickies')
       .update({ title, description, due_date, is_done })
       .eq('id', id)
       .select();
@@ -21,7 +21,7 @@ export const PATCH = async (
   } catch (error) {
     console.error('서버 에러', error);
     return NextResponse.json(
-      { message: '투두 수정 중 서버 오류가 발생했습니다.' },
+      { message: 'Ticky 수정 중 서버 오류가 발생했습니다.' },
       { status: 500 }
     );
   }
@@ -34,7 +34,7 @@ export const DELETE = async (
   const { id } = await params;
   try {
     const { data, error } = await supabase
-      .from('todos')
+      .from('tickies')
       .delete()
       .eq('id', id)
       .select();
@@ -43,7 +43,7 @@ export const DELETE = async (
   } catch (error) {
     console.error('서버 에러', error);
     return NextResponse.json(
-      { message: '투두 삭제 중 서버 오류가 발생했습니다.' },
+      { message: 'Ticky 삭제 중 서버 오류가 발생했습니다.' },
       { status: 500 }
     );
   }

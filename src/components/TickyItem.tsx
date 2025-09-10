@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDeleteTodo, useUpdateTodo } from '@/hooks/useTodos';
-import { Todo } from '@/types/todo';
+import { useDeleteTicky, useUpdateTicky } from '@/hooks/useTicky';
+import { Ticky } from '@/types/ticky';
 import clsx from 'clsx';
+import Input from '@/components/TickyInput';
 
-const TodoItem = ({ todo }: { todo: Todo }) => {
-  const { id, title, description, is_done } = todo;
-  const updateTodo = useUpdateTodo();
-  const deleteTodo = useDeleteTodo();
+const TickyItem = ({ ticky }: { ticky: Ticky }) => {
+  const { id, title, description, is_done } = ticky;
+  const updateTicky = useUpdateTicky();
+  const deleteTicky = useDeleteTicky();
   const [isEditing, setIsEditing] = useState(false);
   const [checked, setChecked] = useState(is_done);
 
-  const { register, handleSubmit, reset } = useForm<Todo>({
+  const { register, handleSubmit, reset } = useForm<Ticky>({
     defaultValues: { title, description: description ?? '' },
   });
 
@@ -20,7 +21,7 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
     const newChecked = !checked;
     setChecked(newChecked);
 
-    updateTodo.mutate(
+    updateTicky.mutate(
       { is_done: newChecked, id },
       { onError: () => setChecked(!newChecked) }
     );
@@ -40,12 +41,12 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
 
   // 삭제 이벤트
   const handleDelete = () => {
-    deleteTodo.mutate(id);
+    deleteTicky.mutate(id);
     setIsEditing(false);
   };
 
-  const onSubmit: SubmitHandler<Todo> = (data) => {
-    updateTodo.mutate(
+  const onSubmit: SubmitHandler<Ticky> = (data) => {
+    updateTicky.mutate(
       { ...data, id },
       { onSuccess: () => setIsEditing(false) }
     );
@@ -54,7 +55,7 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
   return (
     <li className="flex gap-2">
       <input
-        id={`todo-${id}`}
+        id={`ticky-${id}`}
         type="checkbox"
         name="check"
         checked={checked}
@@ -63,38 +64,32 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
 
       {isEditing ? (
         <form onSubmit={handleSubmit(onSubmit)} className="flex gap-1">
-          <input
-            className="border"
-            type="text"
-            id="title"
-            placeholder="할 일을 입력하세요"
-            {...register('title')}
-          />
-          <textarea
-            className="border"
+          <Input id="title" type="text" register={register('title')} />
+          <Input
             id="description"
-            {...register('description')}
+            type="text"
+            register={register('description')}
           />
           <button type="submit">저장</button>
-          <button onClick={handleCancel}>취소</button>
+          <button type="button" onClick={handleCancel}>
+            취소
+          </button>
         </form>
       ) : (
-        <div>
+        <>
           <label
-            htmlFor={`todo-${id}`}
-            className={clsx('text-sm', {
-              'line-through': checked,
-            })}
+            htmlFor={`ticky-${id}`}
+            className={clsx('text-sm', { 'line-through': checked })}
           >
             {title}
           </label>
           {description && <span>{description}</span>}
           <button onClick={handleEdit}>수정</button>
           <button onClick={handleDelete}>삭제</button>
-        </div>
+        </>
       )}
     </li>
   );
 };
 
-export default TodoItem;
+export default TickyItem;

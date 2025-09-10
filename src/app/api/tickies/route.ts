@@ -3,13 +3,13 @@ import { supabase } from '@/lib/supabase/client';
 
 export const GET = async () => {
   try {
-    const { data, error } = await supabase.from('todos').select('*');
+    const { data, error } = await supabase.from('tickies').select('*');
     if (error) throw error;
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error('서버 에러', error);
     return NextResponse.json(
-      { message: '투두 조회 중 서버 오류가 발생했습니다.' },
+      { message: 'Ticky 조회 중 서버 오류가 발생했습니다.' },
       { status: 500 }
     );
   }
@@ -18,7 +18,7 @@ export const GET = async () => {
 export const POST = async (req: NextRequest) => {
   try {
     const formData = await req.json();
-    const { data, error } = await supabase.from('todos').insert({
+    const { data, error } = await supabase.from('tickies').insert({
       ...formData,
       created_at: new Date().toISOString(),
     });
@@ -27,7 +27,7 @@ export const POST = async (req: NextRequest) => {
   } catch (error) {
     console.error('서버 에러', error);
     return NextResponse.json(
-      { message: '투두 생성 중 서버 오류가 발생했습니다.' },
+      { message: 'Ticky 생성 중 서버 오류가 발생했습니다.' },
       { status: 500 }
     );
   }
