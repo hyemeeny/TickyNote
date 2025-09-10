@@ -11,8 +11,8 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'TodoList',
-  description: 'TodoList',
+  title: 'TickyNote',
+  description: 'TickyNote',
 };
 
 export default function RootLayout({
@@ -23,7 +23,9 @@ export default function RootLayout({
   return (
     <QueryProvider>
       <html lang="ko">
-        <body className={`${pretendard.variable} font-pretendard`}>{children}</body>
+        <body className={`${pretendard.variable} font-pretendard`}>
+          {children}
+        </body>
       </html>
     </QueryProvider>
   );
