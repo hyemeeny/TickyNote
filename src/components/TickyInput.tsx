@@ -12,7 +12,7 @@ const TickyInput = ({
     <>
       {label && <label htmlFor={id}>{label}</label>}
       <input id={id} type={type} placeholder={placeholder} {...register} />
-      {errors && <p className="text-red-500 text-sm">{errors.message}</p>}
+      {errors && <p>{errors.message}</p>}
     </>
   );
 };

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDeleteTicky, useUpdateTicky } from '@/hooks/useTicky';
 import { Ticky } from '@/types/ticky';
-import clsx from 'clsx';
 import Input from '@/components/TickyInput';
 
 const TickyItem = ({ ticky }: { ticky: Ticky }) => {
@@ -53,7 +52,7 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
   };
 
   return (
-    <li className="flex gap-2">
+    <li>
       <input
         id={`ticky-${id}`}
         type="checkbox"
@@ -63,7 +62,7 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
       />
 
       {isEditing ? (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex gap-1">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input id="title" type="text" register={register('title')} />
           <Input
             id="description"
@@ -77,12 +76,7 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
         </form>
       ) : (
         <>
-          <label
-            htmlFor={`ticky-${id}`}
-            className={clsx('text-sm', { 'line-through': checked })}
-          >
-            {title}
-          </label>
+          <label htmlFor={`ticky-${id}`}>{title}</label>
           {description && <span>{description}</span>}
           <button onClick={handleEdit}>수정</button>
           <button onClick={handleDelete}>삭제</button>
