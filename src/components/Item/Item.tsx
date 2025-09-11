@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDeleteTicky, useUpdateTicky } from '@/hooks/useTicky';
 import { Ticky } from '@/types/ticky';
-import Input from '@/components/TickyInput';
+import Input from '@/components/Input/Input';
 
 const TickyItem = ({ ticky }: { ticky: Ticky }) => {
   const { id, title, description, is_done } = ticky;

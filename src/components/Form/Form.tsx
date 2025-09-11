@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreateTicky } from '@/hooks/useTicky';
-import TickyInput from '@/components/TickyInput';
+import Input from '@/components/Input/Input';
 
 const schema = z.object({
   title: z.string().min(1, { message: '할 일을 입력해주세요!' }),
@@ -13,7 +13,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const TickyForm = () => {
+const Form = () => {
   const createTicky = useCreateTicky();
 
   const {
@@ -33,7 +33,7 @@ const TickyForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>TickyNote</h1>
-      <TickyInput
+      <Input
         label="제목"
         id="title"
         type="text"
@@ -41,7 +41,7 @@ const TickyForm = () => {
         register={register('title')}
         errors={errors.title}
       />
-      <TickyInput
+      <Input
         label="설명"
         id="description"
         type="text"
@@ -54,4 +54,4 @@ const TickyForm = () => {
   );
 };
 
-export default TickyForm;
+export default Form;

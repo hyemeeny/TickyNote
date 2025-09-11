@@ -9,7 +9,7 @@ export interface Ticky {
   created_at: string; // 생성 날짜
 }
 
-export interface TickyInputProps {
+export interface InputProps {
   label?: string;
   id: string;
   type: string;
