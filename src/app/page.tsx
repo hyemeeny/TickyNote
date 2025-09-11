@@ -4,8 +4,8 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase/client';
-import TickyForm from '@/components/TickyForm';
-import TickyList from '@/components/TickyList';
+import Form from '@/components/Form/Form';
+import List from '@/components/List/List';
 
 const getTickies = async () => {
   const { data, error } = await supabase.from('tickies').select('*');
@@ -25,8 +25,8 @@ export default async function Home() {
     // dehydrate: queryClient 상태를 JSON으로 직렬화하여 클라이언트로 전달
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main>
-        <TickyForm />
-        <TickyList />
+        <Form />
+        <List />
       </main>
     </HydrationBoundary>
   );
