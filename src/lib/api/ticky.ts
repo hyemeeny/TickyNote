@@ -23,7 +23,7 @@ export const updateTicky = async (
   data: { id: string } & Partial<Omit<Ticky, 'id'>>
 ) => {
   const res = await fetch(`/api/tickies/${data.id}`, {
-    method: 'PATCH',
+    method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
@@ -36,5 +36,11 @@ export const deleteTicky = async (id: string) => {
     method: 'DELETE',
   });
   if (!res.ok) throw new Error('Ticky 삭제 실패');
+  return res.json();
+};
+
+export const getTickyDetail = async (id: string): Promise<Ticky> => {
+  const res = await fetch(`/api/tickies/${id}`);
+  if (!res.ok) throw new Error('Ticky 조회 실패');
   return res.json();
 };

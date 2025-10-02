@@ -4,12 +4,21 @@ import {
   createTicky,
   updateTicky,
   deleteTicky,
+  getTickyDetail,
 } from '@/lib/api/ticky';
 
 export const useTicky = () => {
   return useQuery({
     queryKey: ['ticky'],
     queryFn: getTickies,
+  });
+};
+
+export const useTickyDetail = (id: string) => {
+  return useQuery({
+    queryKey: ['ticky', id],
+    queryFn: () => getTickyDetail(id),
+    enabled: !!id,
   });
 };
 

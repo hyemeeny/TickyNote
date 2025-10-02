@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDeleteTicky, useUpdateTicky } from '@/hooks/useTicky';
 import { Ticky } from '@/types/ticky';
-import Input from '@/components/Input/Input';
+import Input from '@/components/TickyInput';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const TickyItem = ({ ticky }: { ticky: Ticky }) => {
   const { id, title, description, is_done } = ticky;
@@ -10,6 +12,7 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
   const deleteTicky = useDeleteTicky();
   const [isEditing, setIsEditing] = useState(false);
   const [checked, setChecked] = useState(is_done);
+  const router = useRouter();
 
   const { register, handleSubmit, reset } = useForm<Ticky>({
     defaultValues: { title, description: description ?? '' },
@@ -28,8 +31,7 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
 
   // 수정 이벤트
   const handleEdit = () => {
-    reset({ title, description: description ?? '' });
-    setIsEditing(true);
+    router.push(`/ticky/${id}`);
   };
 
   // 취소 이벤트
@@ -76,8 +78,10 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
         </form>
       ) : (
         <>
-          <label htmlFor={`ticky-${id}`}>{title}</label>
-          {description && <span>{description}</span>}
+          <Link key={ticky.id} href={`/ticky/${ticky.id}`}>
+            <label htmlFor={`ticky-${id}`}>{title}</label>
+            {description && <span>{description}</span>}
+          </Link>
           <button onClick={handleEdit}>수정</button>
           <button onClick={handleDelete}>삭제</button>
         </>

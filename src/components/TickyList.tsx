@@ -2,7 +2,7 @@
 
 import { Ticky } from '@/types/ticky';
 import { useTicky } from '@/hooks/useTicky';
-import Item from '@/components/Item/Item';
+import TickyItem from '@/components/TickyItem';
 
 const TickyList = () => {
   const { data: tickies, isLoading } = useTicky();
@@ -18,7 +18,7 @@ const TickyList = () => {
   return (
     <ul>
       {sortedTickies.map((ticky: Ticky) => (
-        <Item key={ticky.id} ticky={ticky} />
+        <TickyItem key={ticky.id} ticky={ticky} />
       ))}
     </ul>
   );
