@@ -54,34 +54,34 @@ export const flexColCenter = css`
 export const flexColStart = css`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 export const flexColEnd = css`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-end;
 `;
 
 export const flexColBetween = css`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  align-items: space-between;
 `;
 
 export const flexColAround = css`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
+  align-items: space-around;
 `;
 
 export const flexColEvenly = css`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  justify-content: center;
+  align-items: space-evenly;
 `;

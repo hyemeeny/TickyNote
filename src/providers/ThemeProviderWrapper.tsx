@@ -1,17 +1,14 @@
 'use client';
 
-import { ReactNode } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme } from '@/styles/theme';
 import { GlobalStyle } from '@/styles/GlobalStyle';
+import { useThemeStore } from '@/stores/useThemeStore';
 
-interface ThemeProviderWrapperProps {
-  children: ReactNode;
-}
+const ThemeProviderWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { theme } = useThemeStore();
 
-const ThemeProviderWrapper = ({ children }: ThemeProviderWrapperProps) => {
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
       {children}
     </ThemeProvider>

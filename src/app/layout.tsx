@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { QueryProvider } from '@/providers/query';
 import ThemeProviderWrapper from '@/providers/ThemeProviderWrapper';
+import Header from '@/components/Header';
+import Container from '@/components/Container';
 
 const pretendard = localFont({
   src: '../fonts/PretendardVariable.woff2',
@@ -24,7 +26,10 @@ export default function RootLayout({
     <QueryProvider>
       <html lang="ko">
         <body className={`${pretendard.variable}`}>
-          <ThemeProviderWrapper>{children}</ThemeProviderWrapper>
+          <ThemeProviderWrapper>
+            <Header />
+            <Container>{children}</Container>
+          </ThemeProviderWrapper>
         </body>
       </html>
     </QueryProvider>

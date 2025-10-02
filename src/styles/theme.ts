@@ -8,7 +8,7 @@ export const breakpoints = {
 
 export const colors = {
   text: '#2b2b2b',
-  background: '#42A5F5',
+  background: '#e2e2e2',
   main: '#2196F3',
   sub: '#1E88E5',
   point: '#1E88E5',
@@ -33,7 +33,7 @@ export const darkTheme: DefaultTheme = {
   colors: {
     ...colors,
     text: '#f5f5f5',
-    background: '#BA68C8',
+    background: '#3b0046ff',
     main: '#9C27B0',
     sub: '#7B1FA2',
     point: '#7B1FA2',

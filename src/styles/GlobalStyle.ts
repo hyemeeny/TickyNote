@@ -11,9 +11,10 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    margin: 0;
-    background: #fff;
-    color: #222;
+    font-family: 'Pretendard', sans-serif;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+    transition: all 0.3s ease;
   }
 
   a {
@@ -25,5 +26,11 @@ export const GlobalStyle = createGlobalStyle`
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+
+  button {
+    background: none;
+    border: 0;
+    cursor: pointer;
   }
 `;
