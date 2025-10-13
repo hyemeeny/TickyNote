@@ -1,22 +1,21 @@
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDeleteTicky, useUpdateTicky } from '@/hooks/useTicky';
+import { useUpdateTicky } from '@/hooks/useTicky';
 import { Ticky } from '@/types/ticky';
-import Input from '@/components/TickyInput';
-import { useRouter } from 'next/navigation';
+// import Input from '@/components/TickyInput';
+// import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const TickyItem = ({ ticky }: { ticky: Ticky }) => {
   const { id, title, description, is_done } = ticky;
   const updateTicky = useUpdateTicky();
-  const deleteTicky = useDeleteTicky();
-  const [isEditing, setIsEditing] = useState(false);
+  // const deleteTicky = useDeleteTicky();
+  // const [isEditing, setIsEditing] = useState(false);
   const [checked, setChecked] = useState(is_done);
-  const router = useRouter();
+  // const router = useRouter();
 
-  const { register, handleSubmit, reset } = useForm<Ticky>({
-    defaultValues: { title, description: description ?? '' },
-  });
+  // const { register, handleSubmit, reset } = useForm<Ticky>({
+  //   defaultValues: { title, description: description ?? '' },
+  // });
 
   // 체크박스 이벤트
   const handleChecked = () => {
@@ -30,28 +29,28 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
   };
 
   // 수정 이벤트
-  const handleEdit = () => {
-    router.push(`/ticky/${id}`);
-  };
+  // const handleEdit = () => {
+  //   router.push(`/ticky/${id}`);
+  // };
 
   // 취소 이벤트
-  const handleCancel = () => {
-    reset({ title, description: description ?? '' });
-    setIsEditing(false);
-  };
+  // const handleCancel = () => {
+  //   reset({ title, description: description ?? '' });
+  //   setIsEditing(false);
+  // };
 
   // 삭제 이벤트
-  const handleDelete = () => {
-    deleteTicky.mutate(id);
-    setIsEditing(false);
-  };
+  // const handleDelete = () => {
+  //   deleteTicky.mutate(id);
+  //   setIsEditing(false);
+  // };
 
-  const onSubmit: SubmitHandler<Ticky> = (data) => {
-    updateTicky.mutate(
-      { ...data, id },
-      { onSuccess: () => setIsEditing(false) }
-    );
-  };
+  // const onSubmit: SubmitHandler<Ticky> = (data) => {
+  //   updateTicky.mutate(
+  //     { ...data, id },
+  //     { onSuccess: () => setIsEditing(false) }
+  //   );
+  // };
 
   return (
     <li>
@@ -63,7 +62,12 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
         onChange={handleChecked}
       />
 
-      {isEditing ? (
+      <Link key={ticky.id} href={`/ticky/${ticky.id}`}>
+        <label htmlFor={`ticky-${id}`}>{title}</label>
+        {description && <span>{description}</span>}
+      </Link>
+
+      {/* {isEditing ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input id="title" type="text" register={register('title')} />
           <Input
@@ -85,7 +89,7 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
           <button onClick={handleEdit}>수정</button>
           <button onClick={handleDelete}>삭제</button>
         </>
-      )}
+      )} */}
     </li>
   );
 };

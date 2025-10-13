@@ -12,20 +12,22 @@ export const colors = {
   main: '#2196F3',
   sub: '#1E88E5',
   point: '#1E88E5',
+  gray: '#B0BEC5',
+  red: '#E53935',
 };
 
-export const font = {
-  size: {
-    sm: '0.75rem',
-    md: '1rem',
-    lg: '1.25rem',
-    xl: '1.5rem',
-  },
+export const fontSizes = {
+  'xs': '0.75rem',
+  'sm': '0.875rem',
+  'md': '1rem',
+  'lg': '1.125rem',
+  'xl': '1.25rem',
+  '2xl': '1.5rem',
 };
 
 export const lightTheme: DefaultTheme = {
   colors,
-  font,
+  fontSizes,
   breakpoints,
 };
 
@@ -38,6 +40,6 @@ export const darkTheme: DefaultTheme = {
     sub: '#7B1FA2',
     point: '#7B1FA2',
   },
-  font,
+  fontSizes,
   breakpoints,
 };

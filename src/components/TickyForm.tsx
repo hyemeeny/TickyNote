@@ -3,10 +3,15 @@
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useCreateTicky, useUpdateTicky } from '@/hooks/useTicky';
+import {
+  useCreateTicky,
+  useUpdateTicky,
+  useDeleteTicky,
+} from '@/hooks/useTicky';
 import TickyInput from '@/components/TickyInput';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
+import Button from '@/components/Button';
 
 const schema = z.object({
   title: z.string().min(1, { message: '할 일을 입력해주세요!' }),
@@ -24,6 +29,7 @@ interface TickyFormProps {
 const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
   const createTicky = useCreateTicky();
   const updateTicky = useUpdateTicky();
+  const deleteTicky = useDeleteTicky();
   const router = useRouter();
 
   const {
@@ -48,6 +54,10 @@ const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
     }
   };
 
+  const handleDelete = (id: string) => {
+    deleteTicky.mutate(id, { onSuccess: () => router.push('/') });
+  };
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <TickyInput
@@ -66,7 +76,15 @@ const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
         register={register('description')}
         errors={errors.description}
       />
-      <button type="submit">{mode === 'create' ? '추가' : '수정'}</button>
+      <Button type="submit">{mode === 'create' ? '추가' : '수정'}</Button>
+      <Button variant="secondary" onClick={() => router.push('/')}>
+        취소
+      </Button>
+      {id && (
+        <Button variant="danger" onClick={() => handleDelete(id)}>
+          삭제
+        </Button>
+      )}
     </StyledForm>
   );
 };

@@ -13,14 +13,16 @@ declare module 'styled-components' {
       main: string;
       sub: string;
       point: string;
+      gray: string;
+      red: string;
     };
-    font: {
-      size: {
-        sm: string;
-        md: string;
-        lg: string;
-        xl: string;
-      };
+    fontSizes: {
+      'xs': string;
+      'sm': string;
+      'md': string;
+      'lg': string;
+      'xl': string;
+      '2xl': string;
     };
   }
 }
