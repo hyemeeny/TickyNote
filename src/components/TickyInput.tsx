@@ -31,7 +31,7 @@ export const StyledLabelInputWrap = styled.label`
 
 export const StyledInput = styled.input`
   width: 100%;
-  height: 40px;
+  height: 2.5rem;
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.colors.point};
 
