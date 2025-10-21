@@ -91,6 +91,6 @@ const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
 
 export default TickyForm;
 
-export const StyledForm = styled.form`
+const StyledForm = styled.form`
   width: 100%;
 `;

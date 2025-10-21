@@ -37,7 +37,7 @@ const StyledButton = styled.button<{
   border-radius: 0.5rem;
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.point};
-  font-size: ${({ theme }) => theme.fontSizes.md};
+  font-size: 1rem;
 
   background-color: ${({ variant, theme }) => {
     switch (variant) {
@@ -49,6 +49,7 @@ const StyledButton = styled.button<{
         return theme.colors.point;
     }
   }};
+
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;

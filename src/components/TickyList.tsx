@@ -27,7 +27,7 @@ const TickyList = () => {
 
 export default TickyList;
 
-export const StyledList = styled.ul`
+const StyledList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 1rem;

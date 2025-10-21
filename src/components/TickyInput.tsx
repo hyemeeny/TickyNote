@@ -25,14 +25,14 @@ const TickyInput = ({
 
 export default TickyInput;
 
-export const StyledLabelInputWrap = styled.label`
+const StyledLabelInputWrap = styled.label`
   display: flex;
 `;
 
-export const StyledInput = styled.input`
+const StyledInput = styled.input`
   width: 100%;
   height: 2.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   border: 1px solid ${({ theme }) => theme.colors.point};
 
   &:focus-visible {
