@@ -40,13 +40,13 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
 
 export default TickyItem;
 
-export const StyledItemWrap = styled.li`
+const StyledItemWrap = styled.li`
   display: flex;
   align-items: flex-start;
   gap: 0.625rem;
 `;
 
-export const StyledCheckbox = styled.input`
+const StyledCheckbox = styled.input`
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -69,8 +69,8 @@ export const StyledCheckbox = styled.input`
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 10px;
-    height: 10px;
+    width: 0.625rem;
+    height: 0.625rem;
     background-color: ${({ theme }) => theme.colors.point};
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0);
@@ -87,14 +87,14 @@ export const StyledCheckbox = styled.input`
   }
 `;
 
-export const StyledLabel = styled.label<{ checked: boolean }>`
+const StyledLabel = styled.label<{ checked: boolean }>`
   flex: 1;
   cursor: pointer;
   color: ${({ checked, theme }) => (checked ? '#999' : theme.colors.text)};
   transition: color 0.2s;
 `;
 
-export const StyledItem = styled(Link)<{ checked: boolean }>`
+const StyledItem = styled(Link)<{ checked: boolean }>`
   ${flexColStart}
   text-decoration: ${({ checked }) => (checked ? 'line-through' : 'none')};
   transition: all 0.2s;

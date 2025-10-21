@@ -15,6 +15,6 @@ const ThemeButton = () => {
 
 export default ThemeButton;
 
-export const ToggleButton = styled.button`
+const ToggleButton = styled.button`
   color: ${({ theme }) => theme.colors.point};
 `;
