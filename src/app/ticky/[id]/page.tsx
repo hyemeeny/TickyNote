@@ -8,8 +8,6 @@ const EditTickyPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: ticky, isLoading } = useTickyDetail(id);
 
-  console.log(ticky);
-
   if (isLoading) return <p>Loading...</p>;
   if (!ticky) return <p>존재하지 않는 노트입니다.</p>;
 
