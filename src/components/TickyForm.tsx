@@ -1,6 +1,7 @@
 'use client';
 
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -8,9 +9,9 @@ import {
   useUpdateTicky,
   useDeleteTicky,
 } from '@/hooks/useTicky';
+import { flexColStart, flexRowBetween, flexRowEnd } from '@/styles/mixins';
 import TickyInput from '@/components/TickyInput';
 import styled from 'styled-components';
-import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 
 const schema = z.object({
@@ -35,10 +36,11 @@ const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting, errors, isValid },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues,
+    mode: 'onBlur',
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
@@ -60,31 +62,37 @@ const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <TickyInput
-        label="제목"
-        id="title"
-        type="text"
-        placeholder="할 일을 입력하세요"
-        register={register('title')}
-        errors={errors.title}
-      />
-      <TickyInput
-        label="설명"
-        id="description"
-        type="text"
-        placeholder="설명을 입력하세요"
-        register={register('description')}
-        errors={errors.description}
-      />
-      <Button type="submit">{mode === 'create' ? '추가' : '수정'}</Button>
-      <Button variant="secondary" onClick={() => router.push('/')}>
-        취소
-      </Button>
-      {id && (
-        <Button variant="danger" onClick={() => handleDelete(id)}>
-          삭제
-        </Button>
-      )}
+      <StyledInputWrap>
+        <TickyInput
+          id="title"
+          type="text"
+          placeholder="노트 제목을 입력해주세요."
+          register={register('title')}
+          errors={errors.title}
+        />
+        <TickyInput
+          id="description"
+          textarea={true}
+          placeholder="노트 내용을 입력해주세요."
+          register={register('description')}
+          errors={errors.description}
+        />
+      </StyledInputWrap>
+      <StyledButtonWrap $hasDelete={!!id}>
+        {id && (
+          <Button $variant="danger" onClick={() => handleDelete(id)}>
+            삭제
+          </Button>
+        )}
+        <div>
+          <Button type="submit" disabled={!isValid || isSubmitting}>
+            {mode === 'create' ? '추가' : '수정'}
+          </Button>
+          <Button $variant="secondary" onClick={() => router.push('/')}>
+            취소
+          </Button>
+        </div>
+      </StyledButtonWrap>
     </StyledForm>
   );
 };
@@ -93,4 +101,19 @@ export default TickyForm;
 
 const StyledForm = styled.form`
   width: 100%;
+`;
+
+const StyledInputWrap = styled.div`
+  ${flexColStart}
+  gap: 1rem;
+`;
+
+const StyledButtonWrap = styled.div<{ $hasDelete?: boolean }>`
+  ${({ $hasDelete }) => ($hasDelete ? flexRowBetween : flexRowEnd)};
+  margin-top: 1.5rem;
+
+  & > div {
+    display: flex;
+    gap: 0.5rem;
+  }
 `;

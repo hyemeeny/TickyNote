@@ -1,26 +1,13 @@
 'use client';
 
-import Link from 'next/link';
 import styled from 'styled-components';
 import media from '@/styles/media';
 import { flexRowCenter } from '@/styles/mixins';
-import ThemeButton from '@/components/ThemeButton';
 
 const Container = ({ children }: { children: React.ReactNode }) => {
   return (
     <StyledMain>
-      <StyledContainer>
-        <StyledHeader>
-          <StyledTitleWrap>
-            <h1>
-              <Link href="/">TickyNote</Link>
-            </h1>
-            <p>A simple note-taking app</p>
-          </StyledTitleWrap>
-          <ThemeButton />
-        </StyledHeader>
-        <StyledContent>{children}</StyledContent>
-      </StyledContainer>
+      <StyledContainer>{children}</StyledContainer>
     </StyledMain>
   );
 };
@@ -41,8 +28,9 @@ const StyledContainer = styled.div`
   padding: 1.875rem;
   margin: 0 auto;
   width: 100%;
-  max-width: 30vw;
-  background-color: rgba(255, 255, 255, 0.5);
+  /* max-width: 30vw; */
+  max-width: 26.25rem;
+  background-color: ${({ theme }) => theme.colors.background + '80'};
   -webkit-backdrop-filter: blur(0.625rem);
   backdrop-filter: blur(0.625rem);
   border-radius: 1.5rem;
@@ -55,27 +43,3 @@ const StyledContainer = styled.div`
     max-width: 100vw;
   `}
 `;
-
-const StyledHeader = styled.header`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  h1 {
-    font-size: 2rem;
-    font-weight: 700;
-  }
-
-  p {
-    font-size: 1rem;
-    font-weight: 300;
-  }
-`;
-
-const StyledTitleWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-`;
-
-const StyledContent = styled.section``;

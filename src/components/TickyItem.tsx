@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Ticky } from '@/types/ticky';
 import { useUpdateTicky } from '@/hooks/useTicky';
-import { flexColStart } from '@/styles/mixins';
+import { flexColStart, flexRowCenter } from '@/styles/mixins';
 import styled from 'styled-components';
 
 const TickyItem = ({ ticky }: { ticky: Ticky }) => {
@@ -30,7 +30,7 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
       />
       <StyledLabel htmlFor={`ticky-${id}`} checked={checked}>
         <StyledItem href={`/ticky/${ticky.id}`} checked={checked}>
-          <span>{title}</span>
+          <h4>{title}</h4>
           {description && <p>{description}</p>}
         </StyledItem>
       </StyledLabel>
@@ -41,8 +41,7 @@ const TickyItem = ({ ticky }: { ticky: Ticky }) => {
 export default TickyItem;
 
 const StyledItemWrap = styled.li`
-  display: flex;
-  align-items: flex-start;
+  ${flexRowCenter}
   gap: 0.625rem;
 `;
 
@@ -96,15 +95,25 @@ const StyledLabel = styled.label<{ checked: boolean }>`
 
 const StyledItem = styled(Link)<{ checked: boolean }>`
   ${flexColStart}
+  gap: 0.3125rem;
   text-decoration: ${({ checked }) => (checked ? 'line-through' : 'none')};
   transition: all 0.2s;
 
-  span {
+  h4 {
     font-weight: 500;
   }
 
   p {
     font-size: 0.875rem;
-    color: #999;
+    color: ${({ theme }) => theme.colors.textSub};
+  }
+
+  h4,
+  p {
+    width: 18.75rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
   }
 `;

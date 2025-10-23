@@ -12,7 +12,8 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Pretendard', sans-serif;
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: #666;
+    /* background-color: ${({ theme }) => theme.colors.background}; */
     color: ${({ theme }) => theme.colors.text};
     transition: all 0.3s ease;
   }

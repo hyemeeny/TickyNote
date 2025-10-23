@@ -12,8 +12,9 @@ export interface Ticky {
 export interface InputProps {
   label?: string;
   id: string;
-  type: string;
+  type?: string;
   placeholder?: string;
   register: UseFormRegisterReturn;
   errors?: FieldError;
+  textarea?: boolean;
 }
