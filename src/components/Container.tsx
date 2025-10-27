@@ -35,11 +35,12 @@ const StyledContainer = styled.div`
   backdrop-filter: blur(0.625rem);
   border-radius: 1.5rem;
 
-  ${media.medium`
+  ${media.tablet`
     max-width: 80vw;
   `}
 
-  ${media.small`
+  ${media.mobile`
     max-width: 100vw;
+    padding: 1.875rem .9375rem;
   `}
 `;
