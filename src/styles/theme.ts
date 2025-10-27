@@ -7,6 +7,8 @@ export const colors = {
   point: '#7CB342',
   gray: '#B0BEC5',
   red: '#E53935',
+  themeBg: '#83d8ff',
+  themeIcon: '#ffcf96',
 };
 
 export const lightTheme: DefaultTheme = {
@@ -19,5 +21,7 @@ export const darkTheme: DefaultTheme = {
     text: '#ffffff',
     textSub: '#dddddd',
     background: '#000000',
+    themeBg: '#6b65a7',
+    themeIcon: '#ffe5b5',
   },
 };

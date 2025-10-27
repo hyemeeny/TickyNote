@@ -9,6 +9,8 @@ declare module 'styled-components' {
       point: string;
       gray: string;
       red: string;
+      themeBg: string;
+      themeIcon: string;
     };
   }
 }

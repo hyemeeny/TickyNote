@@ -4,6 +4,7 @@ import { Ticky } from '@/types/ticky';
 import { useUpdateTicky } from '@/hooks/useTicky';
 import { flexColStart, flexRowCenter } from '@/styles/mixins';
 import styled from 'styled-components';
+import media from '@/styles/media';
 
 const TickyItem = ({ ticky }: { ticky: Ticky }) => {
   const { id, title, description, is_done } = ticky;
@@ -105,15 +106,19 @@ const StyledItem = styled(Link)<{ checked: boolean }>`
 
   p {
     font-size: 0.875rem;
-    color: ${({ theme }) => theme.colors.textSub};
+    color: ${({ checked, theme }) => (checked ? '#999' : theme.colors.textSub)};
   }
 
   h4,
   p {
-    width: 18.75rem;
+    max-width: 18.75rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     word-break: break-all;
+
+    ${media.mobile`
+      max-width: 15.625rem;
+    `}
   }
 `;
