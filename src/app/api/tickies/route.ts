@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase/client';
 
-export const GET = async () => {
+export const GET = async (req: Request) => {
   try {
-    const { data, error } = await supabase.from('tickies').select('*');
+    const { searchParams } = new URL(req.url);
+    const query = searchParams.get('query') || '';
+
+    let queryBuilder = supabase.from('tickies').select('*');
+
+    if (query) {
+      queryBuilder = supabase
+        .from('tickies')
+        .select('*')
+        .ilike('title', `%${query}%`);
+    }
+
+    const { data, error } = await queryBuilder;
+
     if (error) throw error;
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
