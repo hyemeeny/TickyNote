@@ -1,29 +1,18 @@
 'use client';
 
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Ticky } from '@/types/ticky';
 import { useTicky } from '@/hooks/useTicky';
-import TickyItem from '@/components/TickyItem';
 import styled from 'styled-components';
+import Search from '@/components/Search';
+import TickyItem from '@/components/TickyItem';
 
 const TickyList = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [query, setQuery] = useState('');
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query') || '';
+  const [search, setSearch] = useState(query);
   const { data: tickies, isLoading } = useTicky(query);
-
-  const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  const onSearch = () => {
-    setQuery(inputValue.trim());
-  };
-
-  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      onSearch();
-    }
-  };
 
   if (isLoading) return <p>Loading...</p>;
   if (!tickies) return null;
@@ -35,16 +24,7 @@ const TickyList = () => {
 
   return (
     <StyledList>
-      <input
-        type="text"
-        id="search"
-        name="search"
-        value={inputValue}
-        onChange={onChangeSearch}
-        onKeyDown={onKeyDown}
-        placeholder="검색어를 입력하세요!"
-      />
-      <button onClick={onSearch}>+</button>
+      <Search search={search} setSearch={setSearch} />
       {sortedTickies.map((ticky: Ticky) => (
         <TickyItem key={ticky.id} ticky={ticky} />
       ))}

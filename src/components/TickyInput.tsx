@@ -31,6 +31,7 @@ export default TickyInput;
 const StyledInput = styled.input`
   width: 100%;
   height: 3.125rem;
+  font-size: 1rem;
   border-radius: 0.5rem;
   border: none;
   padding: 0 1rem;
