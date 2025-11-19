@@ -1,7 +1,6 @@
 import { Ticky } from '@/types/ticky';
 
 export const getTickies = async (query: string) => {
-  console.log('검색어', query);
   const res = await fetch(`/api/tickies?query=${encodeURIComponent(query)}`);
   if (!res.ok) throw new Error('Ticky 조회 실패');
   return res.json();

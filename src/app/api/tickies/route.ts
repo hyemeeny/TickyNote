@@ -5,14 +5,14 @@ export const GET = async (req: Request) => {
   try {
     const { searchParams } = new URL(req.url);
     const query = searchParams.get('query') || '';
-
     let queryBuilder = supabase.from('tickies').select('*');
 
     if (query) {
       queryBuilder = supabase
         .from('tickies')
         .select('*')
-        .ilike('title', `%${query}%`);
+        .ilike('title', `%${query}%`) // 대소문자 구분 없이 검색
+        .range(0, 9);
     }
 
     const { data, error } = await queryBuilder;
