@@ -23,12 +23,14 @@ const TickyList = () => {
   );
 
   return (
-    <StyledList>
+    <>
       <Search search={search} setSearch={setSearch} />
-      {sortedTickies.map((ticky: Ticky) => (
-        <TickyItem key={ticky.id} ticky={ticky} />
-      ))}
-    </StyledList>
+      <StyledList>
+        {sortedTickies.map((ticky: Ticky) => (
+          <TickyItem key={ticky.id} ticky={ticky} />
+        ))}
+      </StyledList>
+    </>
   );
 };
 

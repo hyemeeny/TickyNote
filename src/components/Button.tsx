@@ -38,7 +38,6 @@ const StyledButton = styled.button<{
   padding: 0.3125rem 1.25rem;
   border-radius: 0.5rem;
   color: #fff;
-  background-color: ${({ theme }) => theme.colors.point};
   font-size: 0.875rem;
 
   background-color: ${({ $variant, theme }) => {

@@ -2,6 +2,7 @@ import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import { IoSearch } from 'react-icons/io5';
 import styled from 'styled-components';
+import TickyInput from '@/components/TickyInput';
 
 type SearchProps = {
   search: string;
@@ -10,10 +11,6 @@ type SearchProps = {
 
 const Search = ({ search, setSearch }: SearchProps) => {
   const router = useRouter();
-
-  const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
 
   const onSearch = () => {
     const newQuery = search.trim();
@@ -25,6 +22,10 @@ const Search = ({ search, setSearch }: SearchProps) => {
     }
   };
 
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') onSearch();
   };
@@ -34,14 +35,15 @@ const Search = ({ search, setSearch }: SearchProps) => {
       <StyledButton onClick={onSearch}>
         <IoSearch />
       </StyledButton>
-      <StyledInput
-        type="text"
+      <TickyInput
         id="search"
+        type="text"
         name="search"
         value={search}
-        onChange={onChangeSearch}
+        onChange={onChange}
         onKeyDown={onKeyDown}
         placeholder="찾고 싶은 노트를 입력하세요!"
+        $round
       />
     </StyledSearch>
   );
@@ -54,25 +56,6 @@ const StyledSearch = styled.div`
   width: 100%;
 `;
 
-const StyledInput = styled.input`
-  width: 100%;
-  font-size: 1rem;
-  padding: 0.7rem 3rem 0.7rem 1rem;
-  border-radius: 6.25rem;
-  border: none;
-  color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.background + '80'};
-
-  &::placeholder {
-    font-size: 0.875rem;
-    color: ${({ theme }) => theme.colors.textSub};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.point};
-  }
-`;
-
 const StyledButton = styled.button`
   position: absolute;
   right: 1rem;
@@ -81,8 +64,8 @@ const StyledButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-
   font-size: 1.2rem;
   display: flex;
   align-items: center;
+  color: ${({ theme }) => theme.colors.point};
 `;
