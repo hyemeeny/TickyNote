@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Pretendard', sans-serif;
-    background-color: #eee;
+    background-color: #666;
     /* background-color: ${({ theme }) => theme.colors.background}; */
     color: ${({ theme }) => theme.colors.text};
     transition: all 0.3s ease;
@@ -33,5 +33,9 @@ export const GlobalStyle = createGlobalStyle`
     background: none;
     border: 0;
     cursor: pointer;
+  }
+
+  textarea, textarea::placeholder {
+    font-family: 'Pretendard', sans-serif;
   }
 `;

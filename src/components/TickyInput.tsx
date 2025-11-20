@@ -1,26 +1,10 @@
 import { InputProps } from '@/types/ticky';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const TickyInput = ({
-  id,
-  type = 'text',
-  placeholder,
-  register,
-  errors,
-  textarea = false,
-}: InputProps) => {
+const TickyInput = ({ textarea, errors, ...props }: InputProps) => {
   return (
     <>
-      {textarea ? (
-        <StyledTextarea id={id} placeholder={placeholder} {...register} />
-      ) : (
-        <StyledInput
-          id={id}
-          type={type}
-          placeholder={placeholder}
-          {...register}
-        />
-      )}
+      {textarea ? <StyledTextarea {...props} /> : <StyledInput {...props} />}
       {errors && <ErrorMessage>{errors.message}</ErrorMessage>}
     </>
   );
@@ -28,45 +12,48 @@ const TickyInput = ({
 
 export default TickyInput;
 
-const StyledInput = styled.input`
+const CommonStyles = css<{ $round?: boolean }>`
   width: 100%;
-  height: 3.125rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
+  border-radius: ${({ $round }) => ($round ? '6.25rem' : '0.5rem')};
   border: none;
-  padding: 0 1rem;
+  outline: none;
+  padding: 1rem;
   color: ${({ theme }) => theme.colors.text};
   background-color: ${({ theme }) => theme.colors.background + '80'};
+  transition: all 0.2s;
 
   &::placeholder {
-    font-size: 1rem;
     color: ${({ theme }) => theme.colors.textSub};
   }
 
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.point};
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.background};
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.point};
+    background-color: ${({ theme }) => theme.colors.background};
   }
 `;
 
-const StyledTextarea = styled.textarea`
-  width: 100%;
+const StyledInput = styled.input<{ $round?: boolean }>`
+  ${CommonStyles}
+  height: 3.125rem;
+  font-size: 1rem;
+
+  &::placeholder {
+    font-size: 1rem;
+  }
+`;
+
+const StyledTextarea = styled.textarea<{ $round?: boolean }>`
+  ${CommonStyles}
   height: 12.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  padding: 1rem;
+  font-size: 0.875rem;
   resize: none;
-  font-family: 'Pretendard', sans-serif;
-  color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.background + '80'};
 
   &::placeholder {
     font-size: 0.875rem;
-    font-family: 'Pretendard', sans-serif;
-    color: ${({ theme }) => theme.colors.textSub};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.point};
   }
 `;
 

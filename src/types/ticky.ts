@@ -1,3 +1,4 @@
+import { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 export interface Ticky {
@@ -10,12 +11,15 @@ export interface Ticky {
 }
 
 export interface InputProps {
-  label?: string;
   id: string;
-  name?: string;
   type?: string;
+  name?: string;
+  value?: string;
   placeholder?: string;
   register?: UseFormRegisterReturn;
   errors?: FieldError;
   textarea?: boolean;
+  $round?: boolean;
+  onChange?: ChangeEventHandler;
+  onKeyDown?: KeyboardEventHandler;
 }
