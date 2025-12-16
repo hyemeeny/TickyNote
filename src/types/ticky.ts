@@ -1,5 +1,19 @@
-import { ChangeEventHandler, KeyboardEventHandler } from 'react';
+import {
+  ChangeEventHandler,
+  Dispatch,
+  KeyboardEventHandler,
+  ReactNode,
+  SetStateAction,
+} from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import { z } from 'zod';
+
+export const schema = z.object({
+  title: z.string().min(1, { message: '할 일을 입력해주세요!' }),
+  description: z.string().optional(),
+});
+
+export type FormData = z.infer<typeof schema>;
 
 export interface Ticky {
   id: string; // 고유 ID
@@ -22,4 +36,23 @@ export interface InputProps {
   $round?: boolean;
   onChange?: ChangeEventHandler;
   onKeyDown?: KeyboardEventHandler;
+}
+
+export interface ButtonProps {
+  children: ReactNode;
+  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
+  $variant?: 'primary' | 'secondary' | 'danger';
+  disabled?: boolean;
+}
+
+export interface SearchProps {
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
+}
+
+export interface TickyFormProps {
+  mode: 'create' | 'edit';
+  defaultValues?: FormData;
+  id?: string;
 }

@@ -1,13 +1,9 @@
-import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { SearchProps } from '@/types/ticky';
 import { IoSearch } from 'react-icons/io5';
 import styled from 'styled-components';
 import TickyInput from '@/components/TickyInput';
-
-type SearchProps = {
-  search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
-};
 
 const Search = ({ search, setSearch }: SearchProps) => {
   const router = useRouter();

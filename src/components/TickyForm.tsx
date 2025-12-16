@@ -1,6 +1,5 @@
 'use client';
 
-import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,19 +12,7 @@ import { flexColStart, flexRowBetween, flexRowEnd } from '@/styles/mixins';
 import TickyInput from '@/components/TickyInput';
 import styled from 'styled-components';
 import Button from '@/components/Button';
-
-const schema = z.object({
-  title: z.string().min(1, { message: '할 일을 입력해주세요!' }),
-  description: z.string().optional(),
-});
-
-type FormData = z.infer<typeof schema>;
-
-interface TickyFormProps {
-  mode: 'create' | 'edit';
-  defaultValues?: FormData;
-  id?: string;
-}
+import { FormData, schema, TickyFormProps } from '@/types/ticky';
 
 const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
   const createTicky = useCreateTicky();

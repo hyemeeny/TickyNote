@@ -1,10 +1,11 @@
 'use client';
 
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import media from '@/styles/media';
 import { flexRowCenter } from '@/styles/mixins';
 
-const Container = ({ children }: { children: React.ReactNode }) => {
+const Container = ({ children }: { children: ReactNode }) => {
   return (
     <StyledMain>
       <StyledContainer>{children}</StyledContainer>

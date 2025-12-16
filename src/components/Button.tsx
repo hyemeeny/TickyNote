@@ -1,15 +1,5 @@
-'use client';
-
-import { ReactNode } from 'react';
+import { ButtonProps } from '@/types/ticky';
 import styled from 'styled-components';
-
-interface ButtonProps {
-  children: ReactNode;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  $variant?: 'primary' | 'secondary' | 'danger';
-  disabled?: boolean;
-}
 
 const Button = ({
   children,
