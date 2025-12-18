@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
+import { ReactNode } from 'react';
+import { cookies } from 'next/headers';
 import localFont from 'next/font/local';
+import { ThemeMode } from '@/types/ticky';
 import { QueryProvider } from '@/providers/query';
 import ThemeProviderWrapper from '@/providers/ThemeProviderWrapper';
 import Container from '@/components/Container';
@@ -17,16 +20,20 @@ export const metadata: Metadata = {
   description: 'TickyNote',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const cookieTheme = cookieStore.get('theme')?.value;
+  const theme: ThemeMode = cookieTheme === 'dark' ? 'dark' : 'light';
+
   return (
     <QueryProvider>
       <html lang="ko">
         <body className={`${pretendard.variable}`}>
-          <ThemeProviderWrapper>
+          <ThemeProviderWrapper initialMode={theme}>
             <Container>
               <Header />
               {children}

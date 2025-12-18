@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import {
   ChangeEventHandler,
   Dispatch,
@@ -6,14 +7,12 @@ import {
   SetStateAction,
 } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
-import { z } from 'zod';
-
-export const schema = z.object({
-  title: z.string().min(1, { message: '할 일을 입력해주세요!' }),
-  description: z.string().optional(),
-});
+import { schema } from '@/schemas/schema';
+import { lightTheme } from '@/styles/theme';
 
 export type FormData = z.infer<typeof schema>;
+export type FormMode = 'create' | 'edit';
+export type ThemeMode = 'light' | 'dark';
 
 export interface Ticky {
   id: string; // 고유 ID
@@ -52,7 +51,18 @@ export interface SearchProps {
 }
 
 export interface TickyFormProps {
-  mode: 'create' | 'edit';
+  mode: FormMode;
   defaultValues?: FormData;
   id?: string;
+}
+export interface ThemeProviderWrapperProps {
+  children: ReactNode;
+  initialMode: ThemeMode;
+}
+
+export interface ThemeProps {
+  mode: ThemeMode;
+  theme: typeof lightTheme;
+  setMode: (mode: ThemeMode) => void;
+  toggleTheme: () => void;
 }
