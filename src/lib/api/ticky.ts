@@ -1,9 +1,12 @@
 import { Ticky } from '@/types/ticky';
 
-export const getTickies = async (query: string) => {
-  const res = await fetch(`/api/tickies?query=${encodeURIComponent(query)}`);
+export const getTickies = async (query: string, page = 1, limit = 10) => {
+  const res = await fetch(
+    `/api/tickies?query=${encodeURIComponent(query)}&page=${page}&limit=${limit}`
+  );
   if (!res.ok) throw new Error('Ticky 조회 실패');
-  return res.json();
+  const { data } = await res.json();
+  return data;
 };
 
 export const createTicky = async (formData: {

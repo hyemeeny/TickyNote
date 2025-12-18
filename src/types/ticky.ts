@@ -29,7 +29,7 @@ export interface InputProps {
   name?: string;
   value?: string;
   placeholder?: string;
-  register?: UseFormRegisterReturn;
+  $register?: UseFormRegisterReturn;
   errors?: FieldError;
   textarea?: boolean;
   $round?: boolean;
@@ -51,10 +51,11 @@ export interface SearchProps {
 }
 
 export interface TickyFormProps {
+  id?: string;
   mode: FormMode;
   defaultValues?: FormData;
-  id?: string;
 }
+
 export interface ThemeProviderWrapperProps {
   children: ReactNode;
   initialMode: ThemeMode;
@@ -65,4 +66,10 @@ export interface ThemeProps {
   theme: typeof lightTheme;
   setMode: (mode: ThemeMode) => void;
   toggleTheme: () => void;
+}
+
+export interface PaginationProps {
+  page: number;
+  totalPage: number;
+  onChange: (page: number) => void;
 }

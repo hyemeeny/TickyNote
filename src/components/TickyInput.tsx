@@ -1,10 +1,14 @@
 import { InputProps } from '@/types/ticky';
 import styled, { css } from 'styled-components';
 
-const TickyInput = ({ textarea, errors, ...props }: InputProps) => {
+const TickyInput = ({ textarea, errors, $register, ...props }: InputProps) => {
   return (
     <>
-      {textarea ? <StyledTextarea {...props} /> : <StyledInput {...props} />}
+      {textarea ? (
+        <StyledTextarea {...props} {...$register} />
+      ) : (
+        <StyledInput {...props} {...$register} />
+      )}
       {errors && <ErrorMessage>{errors.message}</ErrorMessage>}
     </>
   );

@@ -8,11 +8,13 @@ import {
   useUpdateTicky,
   useDeleteTicky,
 } from '@/hooks/useTicky';
+import { FormData, TickyFormProps } from '@/types/ticky';
+import { schema } from '@/schemas/schema';
 import { flexColStart, flexRowBetween, flexRowEnd } from '@/styles/mixins';
 import TickyInput from '@/components/TickyInput';
 import styled from 'styled-components';
 import Button from '@/components/Button';
-import { FormData, schema, TickyFormProps } from '@/types/ticky';
+import { useEffect } from 'react';
 
 const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
   const createTicky = useCreateTicky();
@@ -24,11 +26,18 @@ const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
     register,
     handleSubmit,
     formState: { isSubmitting, errors, isValid },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues,
-    mode: 'onBlur',
+    mode: 'onChange',
   });
+
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     if (mode === 'create') {
@@ -54,14 +63,14 @@ const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
           id="title"
           type="text"
           placeholder="노트 제목을 입력해주세요."
-          register={register('title')}
+          $register={register('title')}
           errors={errors.title}
         />
         <TickyInput
           id="description"
           textarea={true}
           placeholder="노트 내용을 입력해주세요."
-          register={register('description')}
+          $register={register('description')}
           errors={errors.description}
         />
       </StyledInputWrap>
