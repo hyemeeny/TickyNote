@@ -7,10 +7,10 @@ import {
   getTickyDetail,
 } from '@/lib/api/ticky';
 
-export const useTicky = (query: string) => {
+export const useTicky = (query: string, page: number, limit: number) => {
   return useQuery({
-    queryKey: ['ticky', query],
-    queryFn: () => getTickies(query),
+    queryKey: ['ticky', query, page, limit],
+    queryFn: () => getTickies(query, page, limit),
     enabled: query !== undefined,
   });
 };

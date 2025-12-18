@@ -7,17 +7,24 @@ import { useTicky } from '@/hooks/useTicky';
 import styled from 'styled-components';
 import Search from '@/components/Search';
 import TickyItem from '@/components/TickyItem';
+import Pagination from '@/components/Pagination';
+
+const LIMIT = 5;
 
 const TickyList = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get('query') || '';
   const [search, setSearch] = useState(query);
-  const { data: tickies, isLoading } = useTicky(query);
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useTicky(query, page, LIMIT);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!tickies) return null;
+  if (!data) return null;
+  console.log(data);
 
-  const sortedTickies = [...tickies].sort(
+  const totalPage = Math.ceil(data / LIMIT);
+
+  const sortedTickies = [...data].sort(
     (a, b) =>
       new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
   );
@@ -30,6 +37,7 @@ const TickyList = () => {
           <TickyItem key={ticky.id} ticky={ticky} />
         ))}
       </StyledList>
+      <Pagination page={page} totalPage={totalPage} onChange={setPage} />
     </>
   );
 };
