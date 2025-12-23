@@ -5,8 +5,7 @@ export const getTickies = async (query: string, page = 1, limit = 10) => {
     `/api/tickies?query=${encodeURIComponent(query)}&page=${page}&limit=${limit}`
   );
   if (!res.ok) throw new Error('Ticky 조회 실패');
-  const { data } = await res.json();
-  return data;
+  return res.json();
 };
 
 export const createTicky = async (formData: {

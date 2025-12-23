@@ -20,11 +20,14 @@ const TickyList = () => {
 
   if (isLoading) return <p>Loading...</p>;
   if (!data) return null;
-  console.log(data);
 
-  const totalPage = Math.ceil(data / LIMIT);
+  const { data: tickies, pagination } = data;
+  const { totalPage } = pagination;
 
-  const sortedTickies = [...data].sort(
+  console.log('data', data);
+  console.log('totalPage', totalPage);
+
+  const sortedTickies = [...tickies].sort(
     (a, b) =>
       new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
   );
