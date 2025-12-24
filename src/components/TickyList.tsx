@@ -24,12 +24,9 @@ const TickyList = () => {
   const { data: tickies, pagination } = data;
   const { totalPage } = pagination;
 
-  console.log('data', data);
-  console.log('totalPage', totalPage);
-
   const sortedTickies = [...tickies].sort(
     (a, b) =>
-      new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
 
   return (
