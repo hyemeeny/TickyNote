@@ -17,14 +17,23 @@ const Pagination = ({ page, totalPage, onChange }: PaginationProps) => {
 
   return (
     <StyledPagination aria-label="pagination">
-      {/* 이전 페이지 */}
+      {/* 처음 페이지 */}
       <StyledArrowBtn
         onClick={() => onChange(start - 1)}
         disabled={start === 1}
+        aria-label="처음 페이지로 이동"
+        aria-disabled={start === 1}
       >
         <MdKeyboardDoubleArrowLeft />
       </StyledArrowBtn>
-      <StyledArrowBtn onClick={() => onChange(page - 1)} disabled={page === 1}>
+
+      {/* 이전 페이지 */}
+      <StyledArrowBtn
+        onClick={() => onChange(page - 1)}
+        disabled={page === 1}
+        aria-label="이전 페이지로 이동"
+        aria-disabled={page === 1}
+      >
         <MdKeyboardArrowLeft />
       </StyledArrowBtn>
 
@@ -35,6 +44,7 @@ const Pagination = ({ page, totalPage, onChange }: PaginationProps) => {
             key={num}
             onClick={() => onChange(num)}
             aria-current={num === page ? 'page' : undefined}
+            aria-label={`페이지 ${num}${num === page ? ', 현재 페이지' : ''}`}
           >
             {num}
           </StyledNumBtn>
@@ -45,12 +55,18 @@ const Pagination = ({ page, totalPage, onChange }: PaginationProps) => {
       <StyledArrowBtn
         onClick={() => onChange(page + 1)}
         disabled={page === totalPage}
+        aria-label="다음 페이지로 이동"
+        aria-disabled={page === totalPage}
       >
         <MdKeyboardArrowRight />
       </StyledArrowBtn>
+
+      {/* 마지막 페이지 */}
       <StyledArrowBtn
         onClick={() => onChange(end + 1)}
         disabled={end === totalPage}
+        aria-label="마지막 페이지로 이동"
+        aria-disabled={end === totalPage}
       >
         <MdKeyboardDoubleArrowRight />
       </StyledArrowBtn>
@@ -72,8 +88,10 @@ const StyledPagination = styled.nav`
   ${flexRowCenter}
 `;
 
-const StyledArrowBtn = styled.button`
+const StyledArrowBtn = styled.button<{ disabled: boolean }>`
   ${CommonStyles}
+  color: ${({ disabled, theme }) => disabled && theme.colors.textSub};
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
 const StyledNumBtn = styled.button`
