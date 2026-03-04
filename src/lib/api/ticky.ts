@@ -8,14 +8,14 @@ export const getTickies = async (query: string, page = 1, limit = 10) => {
   return res.json();
 };
 
-export const createTicky = async (formData: {
+export const createTicky = async (data: {
   title: string;
   description?: string;
 }) => {
   const res = await fetch('/api/tickies', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error('Ticky 생성 실패');
   return res.json();
