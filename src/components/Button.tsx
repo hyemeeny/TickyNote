@@ -1,24 +1,21 @@
-import { ButtonProps } from '@/types/ticky';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
 import styled from 'styled-components';
 
-const Button = ({
-  children,
-  onClick,
-  type = 'button',
-  $variant = 'primary',
-  disabled = false,
-}: ButtonProps) => {
-  return (
-    <StyledButton
-      onClick={onClick}
-      type={type}
-      $variant={$variant}
-      disabled={disabled}
-    >
-      {children}
-    </StyledButton>
-  );
-};
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  $variant?: 'primary' | 'secondary' | 'danger';
+}
+
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, type = 'button', $variant = 'primary', ...props }, ref) => {
+    return (
+      <StyledButton ref={ref} type={type} $variant={$variant} {...props}>
+        {children}
+      </StyledButton>
+    );
+  }
+);
+
+Button.displayName = 'Button';
 
 export default Button;
 
