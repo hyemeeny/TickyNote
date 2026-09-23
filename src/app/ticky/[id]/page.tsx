@@ -1,3 +1,5 @@
+'use client';
+
 import { useParams } from 'next/navigation';
 import { useTickyDetail } from '@/hooks/useTicky';
 import TickyForm from '@/components/TickyForm';
