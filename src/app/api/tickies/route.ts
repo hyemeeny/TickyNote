@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 
 export const GET = async (req: Request) => {
   try {
@@ -11,6 +11,7 @@ export const GET = async (req: Request) => {
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 
+    const supabase = await createClient();
     let queryBuilder = supabase
       .from('tickies')
       .select('*', { count: 'exact' }) // 총 개수 가져오기
@@ -48,6 +49,7 @@ export const GET = async (req: Request) => {
 export const POST = async (req: NextRequest) => {
   try {
     const formData = await req.json();
+    const supabase = await createClient();
     const { data, error } = await supabase.from('tickies').insert({
       ...formData,
       created_at: new Date().toISOString(),

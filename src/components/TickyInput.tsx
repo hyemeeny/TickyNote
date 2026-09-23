@@ -1,20 +1,40 @@
-import { InputProps } from '@/types/ticky';
+import { forwardRef } from 'react';
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import type { FieldError } from 'react-hook-form';
 import styled, { css } from 'styled-components';
 
-const TickyInput = ({ textarea, errors, $register, ...props }: InputProps) => {
-  return (
-    <>
-      {textarea ? (
-        <StyledTextarea {...props} {...$register} />
-      ) : (
-        <StyledInput {...props} {...$register} />
-      )}
-      {errors && <ErrorMessage>{errors.message}</ErrorMessage>}
-    </>
-  );
+type ErrorProps = {
+  errors?: FieldError;
 };
 
-export default TickyInput;
+export type TickyInputProps = InputHTMLAttributes<HTMLInputElement> & {
+  $round?: boolean;
+} & ErrorProps;
+
+export const TickyInput = forwardRef<HTMLInputElement, TickyInputProps>(
+  ({ errors, $round, ...props }, ref) => (
+    <>
+      <StyledInput ref={ref} $round={$round} {...props} />
+      {errors && <ErrorMessage>{errors.message}</ErrorMessage>}
+    </>
+  )
+);
+TickyInput.displayName = 'TickyInput';
+
+export type TickyTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  $round?: boolean;
+} & ErrorProps;
+
+export const TickyTextarea = forwardRef<
+  HTMLTextAreaElement,
+  TickyTextareaProps
+>(({ errors, $round, ...props }, ref) => (
+  <>
+    <StyledTextarea ref={ref} $round={$round} {...props} />
+    {errors && <ErrorMessage>{errors.message}</ErrorMessage>}
+  </>
+));
+TickyTextarea.displayName = 'TickyTextarea';
 
 const CommonStyles = css<{ $round?: boolean }>`
   width: 100%;

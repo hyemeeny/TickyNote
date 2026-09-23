@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { SearchProps } from '@/types/ticky';
 import { IoSearch } from 'react-icons/io5';
 import styled from 'styled-components';
-import TickyInput from '@/components/TickyInput';
+import { TickyInput } from '@/components/TickyInput';
 
 const Search = ({ search, setSearch }: SearchProps) => {
   const router = useRouter();

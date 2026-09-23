@@ -1,12 +1,5 @@
 import { z } from 'zod';
-import {
-  ChangeEventHandler,
-  Dispatch,
-  KeyboardEventHandler,
-  ReactNode,
-  SetStateAction,
-} from 'react';
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { schema } from '@/schemas/schema';
 import { lightTheme } from '@/styles/theme';
 
@@ -21,28 +14,6 @@ export interface Ticky {
   due_date: string | null; // 마감 날짜
   is_done: boolean; // 완료 여부
   created_at: string; // 생성 날짜
-}
-
-export interface InputProps {
-  id: string;
-  type?: string;
-  name?: string;
-  value?: string;
-  placeholder?: string;
-  $register?: UseFormRegisterReturn;
-  errors?: FieldError;
-  textarea?: boolean;
-  $round?: boolean;
-  onChange?: ChangeEventHandler;
-  onKeyDown?: KeyboardEventHandler;
-}
-
-export interface ButtonProps {
-  children: ReactNode;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-  $variant?: 'primary' | 'secondary' | 'danger';
-  disabled?: boolean;
 }
 
 export interface SearchProps {

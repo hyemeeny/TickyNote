@@ -1,5 +1,5 @@
-import { createClient } from '@supabase/supabase-js'
-import { Database } from '@/types/supabase'
+import { createBrowserClient } from '@supabase/ssr';
+import { Database } from '@/types/supabase';
 
 /**
  * Supabase 클라이언트 인스턴스 생성
@@ -18,12 +18,8 @@ import { Database } from '@/types/supabase'
  * - 세션 자동 처리 없음 (단순 CRUD에 적합)
  */
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-export const supabase = createClient<Database>(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-
-
+export const createClient = () =>
+  createBrowserClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+  );

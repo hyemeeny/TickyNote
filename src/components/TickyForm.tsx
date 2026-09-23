@@ -11,7 +11,7 @@ import {
 import { FormData, TickyFormProps } from '@/types/ticky';
 import { schema } from '@/schemas/schema';
 import { flexColStart, flexRowBetween, flexRowEnd } from '@/styles/mixins';
-import TickyInput from '@/components/TickyInput';
+import { TickyInput, TickyTextarea } from '@/components/TickyInput';
 import styled from 'styled-components';
 import Button from '@/components/Button';
 import { useEffect } from 'react';
@@ -63,14 +63,13 @@ const TickyForm = ({ mode, defaultValues, id }: TickyFormProps) => {
           id="title"
           type="text"
           placeholder="노트 제목을 입력해주세요."
-          $register={register('title')}
+          {...register('title')}
           errors={errors.title}
         />
-        <TickyInput
+        <TickyTextarea
           id="description"
-          textarea={true}
           placeholder="노트 내용을 입력해주세요."
-          $register={register('description')}
+          {...register('description')}
           errors={errors.description}
         />
       </StyledInputWrap>
