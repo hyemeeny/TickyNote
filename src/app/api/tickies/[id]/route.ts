@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 
 /* Next.js 15.1+ App Router에서는 params가 Promise로 래핑될 수 있음 */
 type ParamsProps = Promise<{ id: string }>;
@@ -11,6 +11,7 @@ export const GET = async (
   const { id } = await params;
 
   try {
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from('tickies')
       .select('*')
@@ -43,6 +44,7 @@ export const PUT = async (
 
   try {
     const { title, description, due_date, is_done } = await req.json();
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from('tickies')
       .update({ title, description, due_date, is_done })
@@ -67,6 +69,7 @@ export const DELETE = async (
   const { id } = await params;
 
   try {
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from('tickies')
       .delete()

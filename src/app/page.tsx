@@ -3,10 +3,11 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/server';
 import Content from '@/components/Content';
 
 const getTickies = async () => {
+  const supabase = await createClient();
   const { data, error } = await supabase.from('tickies').select('*');
   if (error) throw error;
   return data;
