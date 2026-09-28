@@ -3,15 +3,13 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 import TickyList from '@/components/TickyList';
-import Button from '@/components/Button';
+import { darken } from 'polished';
 
 const Content = () => {
   return (
     <StyledContent>
       <TickyList />
-      <StyledNewButton href="/ticky/new">
-        <Button>새 노트</Button>
-      </StyledNewButton>
+      <StyledLinkButton href="/ticky/new">새 노트</StyledLinkButton>
     </StyledContent>
   );
 };
@@ -24,6 +22,16 @@ const StyledContent = styled.section`
   gap: 1.5rem;
 `;
 
-const StyledNewButton = styled(Link)`
+const StyledLinkButton = styled(Link)`
   margin-left: auto;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 0.875rem;
+  background-color: ${({ theme }) => theme.colors.point};
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => darken(0.04, theme.colors.point)};
+  }
 `;

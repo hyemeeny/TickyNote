@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   $variant?: 'primary' | 'secondary' | 'danger';
@@ -26,6 +27,7 @@ const StyledButton = styled.button<{
   border-radius: 0.5rem;
   color: #fff;
   font-size: 0.875rem;
+  transition: background-color 0.3s ease;
 
   background-color: ${({ $variant, theme }) => {
     switch ($variant) {
@@ -37,6 +39,19 @@ const StyledButton = styled.button<{
         return theme.colors.point;
     }
   }};
+
+  &:hover {
+    background-color: ${({ theme, $variant }) => {
+      const base =
+        $variant === 'secondary'
+          ? theme.colors.gray
+          : $variant === 'danger'
+            ? theme.colors.red
+            : theme.colors.point;
+
+      return darken(0.04, base);
+    }};
+  }
 
   &:disabled {
     opacity: 0.6;
